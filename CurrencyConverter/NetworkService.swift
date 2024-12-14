@@ -22,7 +22,7 @@ class NetworkService {
     }
     
     func fetchConversion(fromAmount: Double, fromCurrency: String, toCurrency: String, completion: @escaping (Result<ConversionResponse, NetworkError>) -> Void) {
-        let urlString = "http://api.evpr.lt/currency/commercial/exchange/\(fromAmount)-\(fromCurrency)/\(toCurrency)/latest"
+        let urlString = "http://api.evp.lt/currency/commercial/exchange/\(fromAmount)-\(fromCurrency)/\(toCurrency)/latest"
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL))
             return

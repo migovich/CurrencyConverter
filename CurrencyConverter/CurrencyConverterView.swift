@@ -43,7 +43,6 @@ class CurrencyConverterView: UIView {
         toCurrencyPicker.dataSource = self
         toCurrencyPicker.delegate = self
         
-        amountTextField.text = "1"
         amountTextField.borderStyle = .roundedRect
         amountTextField.placeholder = "Enter amount"
         amountTextField.keyboardType = .decimalPad
@@ -78,6 +77,11 @@ class CurrencyConverterView: UIView {
         if let toIndex = currencies.firstIndex(of: "USD") {
             toCurrencyPicker.selectRow(toIndex, inComponent: 0, animated: false)
         }
+    }
+    
+    // MARK: Functions [Public]
+    func setConvertedAmount(_ text: String) {
+        resultLabel.text = text
     }
     
     // MARK: Actions

@@ -10,4 +10,8 @@ import Foundation
 struct ConversionResponse: Codable {
     let amount: String
     let currency: String
+    
+    var convertedAmount: Double {
+        Double(amount) ?? 0
+    }
 }
