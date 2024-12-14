@@ -61,6 +61,16 @@ class CurrencyConverterViewModel {
         timer = nil
     }
     
+    func formattedAmount(_ amount: Double, currency: String) -> String {
+        return String(format: "%.2f %@", amount, currency)
+    }
+    
+    func formattedLastUpdatedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.string(from: date)
+    }
+    
     func fetchConversion() {
         delegate?.didStartLoading()
         networkService.fetchConversion(fromAmount: amount,

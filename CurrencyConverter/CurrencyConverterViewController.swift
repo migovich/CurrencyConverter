@@ -22,6 +22,12 @@ class CurrencyConverterViewController: UIViewController {
         super.viewDidLoad()
         currencyConverterView.delegate = self
         viewModel.delegate = self
+        viewModel.fetchConversion()
+        viewModel.startPeriodicUpdates()
+    }
+    
+    deinit {
+        viewModel.stopPeriodicUpdates()
     }
 }
 
@@ -43,7 +49,11 @@ extension CurrencyConverterViewController: CurrencyConverterViewDelegate {
 // MARK: - CurrencyConverterViewModelDelegate
 extension CurrencyConverterViewController: CurrencyConverterViewModelDelegate {
     func didUpdateConversion(amount: Double, currency: String) {
-        currencyConverterView.setConvertedAmount("\(String(format: "%.2f", amount)) \(currency)")
+        let formattedAmount = viewModel.formattedAmount(amount, currency: currency)
+        currencyConverterView.setConvertedAmount(formattedAmount)
+        
+        let formattedLastUpdatedDate = viewModel.formattedLastUpdatedDate(.now)
+        currencyConverterView.setLastUpdated(formattedLastUpdatedDate)
     }
     
     func didStartLoading() {

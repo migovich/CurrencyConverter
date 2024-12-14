@@ -20,6 +20,7 @@ class CurrencyConverterView: UIView {
     private let toCurrencyPicker = UIPickerView()
     private let amountTextField = UITextField()
     private let resultLabel = UILabel()
+    private let lastUpdatedLabel = UILabel()
     private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
     private let currencies = ["EUR", "USD", "JPY", "GBP", "AUD", "CAD"]
@@ -64,7 +65,7 @@ class CurrencyConverterView: UIView {
         pickerStack.axis = .horizontal
         pickerStack.distribution = .fillEqually
         
-        let mainStack = UIStackView(arrangedSubviews: [pickerStack, amountTextField, resultLabel, loadingIndicator])
+        let mainStack = UIStackView(arrangedSubviews: [pickerStack, amountTextField, resultLabel, lastUpdatedLabel, loadingIndicator])
         mainStack.axis = .vertical
         mainStack.spacing = 20
         mainStack.alignment = .center
@@ -73,7 +74,7 @@ class CurrencyConverterView: UIView {
         addSubview(mainStack)
         
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            mainStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             mainStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             mainStack.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.8),
             amountTextField.widthAnchor.constraint(equalTo: mainStack.widthAnchor),
@@ -91,6 +92,10 @@ class CurrencyConverterView: UIView {
     // MARK: Functions [Public]
     func setConvertedAmount(_ text: String) {
         resultLabel.text = text
+    }
+    
+    func setLastUpdated(_ text: String) {
+        lastUpdatedLabel.text = "Last updated: \(text)"
     }
     
     // MARK: Actions
