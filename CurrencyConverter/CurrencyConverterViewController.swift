@@ -46,6 +46,14 @@ extension CurrencyConverterViewController: CurrencyConverterViewModelDelegate {
         currencyConverterView.setConvertedAmount("\(String(format: "%.2f", amount)) \(currency)")
     }
     
+    func didStartLoading() {
+        currencyConverterView.isLoading = true
+    }
+    
+    func didFinishLoading() {
+        currencyConverterView.isLoading = false
+    }
+    
     func didFailWithError(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))

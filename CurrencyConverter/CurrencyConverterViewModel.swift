@@ -9,6 +9,8 @@ import Foundation
 
 protocol CurrencyConverterViewModelDelegate: AnyObject {
     func didUpdateConversion(amount: Double, currency: String)
+    func didStartLoading()
+    func didFinishLoading()
     func didFailWithError(message: String)
 }
 
@@ -60,10 +62,12 @@ class CurrencyConverterViewModel {
     }
     
     func fetchConversion() {
+        delegate?.didStartLoading()
         networkService.fetchConversion(fromAmount: amount,
                                        fromCurrency: fromCurrency,
                                        toCurrency: toCurrency) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
+                self?.delegate?.didFinishLoading()
                 switch result {
                 case .success(let conversion):
                     self?.delegate?.didUpdateConversion(amount: conversion.convertedAmount,

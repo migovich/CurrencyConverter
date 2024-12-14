@@ -20,10 +20,17 @@ class CurrencyConverterView: UIView {
     private let toCurrencyPicker = UIPickerView()
     private let amountTextField = UITextField()
     private let resultLabel = UILabel()
+    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
     private let currencies = ["EUR", "USD", "JPY", "GBP", "AUD", "CAD"]
     private var selectedFromCurrency: String = "EUR"
     private var selectedToCurrency: String = "USD"
+    
+    var isLoading: Bool = false {
+        didSet {
+            isLoading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
+        }
+    }
     
     // MARK: Life Cycle
     override init(frame: CGRect) {
@@ -51,11 +58,13 @@ class CurrencyConverterView: UIView {
         resultLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         resultLabel.textAlignment = .center
         
+        loadingIndicator.hidesWhenStopped = true
+        
         let pickerStack = UIStackView(arrangedSubviews: [fromCurrencyPicker, toCurrencyPicker])
         pickerStack.axis = .horizontal
         pickerStack.distribution = .fillEqually
         
-        let mainStack = UIStackView(arrangedSubviews: [pickerStack, amountTextField, resultLabel])
+        let mainStack = UIStackView(arrangedSubviews: [pickerStack, amountTextField, resultLabel, loadingIndicator])
         mainStack.axis = .vertical
         mainStack.spacing = 20
         mainStack.alignment = .center
