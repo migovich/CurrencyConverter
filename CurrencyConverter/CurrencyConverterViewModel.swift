@@ -33,7 +33,7 @@ class CurrencyConverterViewModel {
         self.amount = amount
     }
     
-    // MARK: Functions [Public]
+    // MARK: Setters
     func setFromCurrency(_ currency: String) {
         fromCurrency = currency
         fetchConversion()
@@ -49,6 +49,7 @@ class CurrencyConverterViewModel {
         fetchConversion()
     }
     
+    // MARK: Periodic Updates
     func startPeriodicUpdates() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
@@ -61,6 +62,7 @@ class CurrencyConverterViewModel {
         timer = nil
     }
     
+    // MARK: Formatting
     func formattedAmount(_ amount: Double, currency: String) -> String {
         return String(format: "%.2f %@", amount, currency)
     }
@@ -71,6 +73,7 @@ class CurrencyConverterViewModel {
         return formatter.string(from: date)
     }
     
+    // MARK: Data Fetching
     func fetchConversion() {
         delegate?.didStartLoading()
         networkService.fetchConversion(fromAmount: amount,

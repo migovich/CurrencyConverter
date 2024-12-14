@@ -13,7 +13,7 @@ class CurrencyConverterViewController: UIViewController {
     private let currencyConverterView = CurrencyConverterView()
     private let viewModel = CurrencyConverterViewModel(networkService: NetworkService())
 
-    // MARK: Life Cycle
+    // MARK: Lifecycle
     override func loadView() {
         view = currencyConverterView
     }

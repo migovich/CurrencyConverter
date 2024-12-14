@@ -33,7 +33,7 @@ class CurrencyConverterView: UIView {
         }
     }
     
-    // MARK: Life Cycle
+    // MARK: Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()
@@ -43,7 +43,7 @@ class CurrencyConverterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Functions [Private]
+    // MARK: Configuration
     private func configureViews() {
         backgroundColor = .systemBackground
         fromCurrencyPicker.dataSource = self
@@ -89,7 +89,7 @@ class CurrencyConverterView: UIView {
         }
     }
     
-    // MARK: Functions [Public]
+    // MARK: Public Methods
     func setConvertedAmount(_ text: String) {
         resultLabel.text = text
     }
