@@ -33,11 +33,11 @@ class CurrencyConverterViewController: UIViewController {
 
 // MARK: - CurrencyConverterViewDelegate
 extension CurrencyConverterViewController: CurrencyConverterViewDelegate {
-    func didChangeFromCurrency(_ currency: String) {
+    func didChangeFromCurrency(_ currency: Currency) {
         viewModel.setFromCurrency(currency)
     }
     
-    func didChangeToCurrency(_ currency: String) {
+    func didChangeToCurrency(_ currency: Currency) {
         viewModel.setToCurrency(currency)
     }
     

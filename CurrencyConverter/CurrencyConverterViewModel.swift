@@ -21,12 +21,12 @@ class CurrencyConverterViewModel {
     private var timer: Timer?
     
     // MARK: State properties
-    private var fromCurrency: String
-    private var toCurrency: String
+    private var fromCurrency: Currency
+    private var toCurrency: Currency
     private var amount: Double
     
     // MARK: Initialization
-    init(networkService: NetworkService, fromCurrency: String = "EUR", toCurrency: String = "USD", amount: Double = 1) {
+    init(networkService: NetworkService, fromCurrency: Currency = .eur, toCurrency: Currency = .usd, amount: Double = 1) {
         self.networkService = networkService
         self.fromCurrency = fromCurrency
         self.toCurrency = toCurrency
@@ -34,12 +34,12 @@ class CurrencyConverterViewModel {
     }
     
     // MARK: Setters
-    func setFromCurrency(_ currency: String) {
+    func setFromCurrency(_ currency: Currency) {
         fromCurrency = currency
         fetchConversion()
     }
     
-    func setToCurrency(_ currency: String) {
+    func setToCurrency(_ currency: Currency) {
         toCurrency = currency
         fetchConversion()
     }
@@ -77,8 +77,8 @@ class CurrencyConverterViewModel {
     func fetchConversion() {
         delegate?.didStartLoading()
         networkService.fetchConversion(fromAmount: amount,
-                                       fromCurrency: fromCurrency,
-                                       toCurrency: toCurrency) { [weak self] result in
+                                       fromCurrency: fromCurrency.networkKey,
+                                       toCurrency: toCurrency.networkKey) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 self?.delegate?.didFinishLoading()
                 switch result {

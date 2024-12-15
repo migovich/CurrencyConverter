@@ -8,8 +8,8 @@
 import UIKit
 
 protocol CurrencyConverterViewDelegate: AnyObject {
-    func didChangeFromCurrency(_ currency: String)
-    func didChangeToCurrency(_ currency: String)
+    func didChangeFromCurrency(_ currency: Currency)
+    func didChangeToCurrency(_ currency: Currency)
     func didChangeAmount(_ amount: String)
 }
 
@@ -23,9 +23,9 @@ class CurrencyConverterView: UIView {
     private let lastUpdatedLabel = UILabel()
     private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
-    private let currencies = ["EUR", "USD", "JPY", "GBP", "AUD", "CAD"]
-    private var selectedFromCurrency: String = "EUR"
-    private var selectedToCurrency: String = "USD"
+    private let currencies: [Currency] = Currency.allCases
+    private var selectedFromCurrency: Currency = .eur
+    private var selectedToCurrency: Currency = .usd
     
     var isLoading: Bool = false {
         didSet {
@@ -80,11 +80,11 @@ class CurrencyConverterView: UIView {
             amountTextField.widthAnchor.constraint(equalTo: mainStack.widthAnchor),
         ])
         
-        if let fromIndex = currencies.firstIndex(of: "EUR") {
+        if let fromIndex = currencies.firstIndex(of: .eur) {
             fromCurrencyPicker.selectRow(fromIndex, inComponent: 0, animated: false)
         }
         
-        if let toIndex = currencies.firstIndex(of: "USD") {
+        if let toIndex = currencies.firstIndex(of: .usd) {
             toCurrencyPicker.selectRow(toIndex, inComponent: 0, animated: false)
         }
     }
@@ -115,7 +115,7 @@ extension CurrencyConverterView: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return currencies[row]
+        return currencies[row].description
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
