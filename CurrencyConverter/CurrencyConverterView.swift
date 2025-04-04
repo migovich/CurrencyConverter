@@ -80,13 +80,8 @@ class CurrencyConverterView: UIView {
             amountTextField.widthAnchor.constraint(equalTo: mainStack.widthAnchor),
         ])
         
-        if let fromIndex = currencies.firstIndex(of: .eur) {
-            fromCurrencyPicker.selectRow(fromIndex, inComponent: 0, animated: false)
-        }
-        
-        if let toIndex = currencies.firstIndex(of: .usd) {
-            toCurrencyPicker.selectRow(toIndex, inComponent: 0, animated: false)
-        }
+        selectRow(in: fromCurrencyPicker, for: selectedFromCurrency, animated: false)
+        selectRow(in: toCurrencyPicker, for: selectedToCurrency, animated: false)
     }
     
     // MARK: Public Methods
@@ -101,6 +96,15 @@ class CurrencyConverterView: UIView {
     // MARK: Actions
     @objc private func amountChanged() {
         delegate?.didChangeAmount(amountTextField.text ?? "")
+    }
+    
+    // MARK: Helpers
+    private func selectRow(in pickerView: UIPickerView, for currency: Currency, animated: Bool = true) {
+        guard let index = currencies.firstIndex(of: currency) else {
+            print("⚠️ No index found for \(currency)")
+            return
+        }
+        pickerView.selectRow(index, inComponent: 0, animated: animated)
     }
 }
 
@@ -120,9 +124,17 @@ extension CurrencyConverterView: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == fromCurrencyPicker {
+            guard currencies[row] != selectedToCurrency else {
+                selectRow(in: fromCurrencyPicker, for: selectedFromCurrency)
+                return
+            }
             selectedFromCurrency = currencies[row]
             delegate?.didChangeFromCurrency(selectedFromCurrency)
         } else if pickerView == toCurrencyPicker {
+            guard currencies[row] != selectedFromCurrency else {
+                selectRow(in: toCurrencyPicker, for: selectedToCurrency)
+                return
+            }
             selectedToCurrency = currencies[row]
             delegate?.didChangeToCurrency(selectedToCurrency)
         }
